@@ -1,0 +1,43 @@
+public class lookupfieldController {
+    
+    @AuraEnabled
+    public static List <sObject> SearchRecords(String ObjectName, List<String> ReturnFields, List<String> QueryFields, String SearchText, String SortColumn, String SortOrder, Integer MaxResults) {
+
+        //always put a limit to the results
+        if (MaxResults == null || MaxResults == 0) {
+            MaxResults = 5;
+        }
+        
+        SearchText = '%' + SearchText + '%';
+        
+        List <sObject > returnList = new List < sObject > ();
+        
+        String sQuery =  'SELECT Id, ';
+        
+        if (ReturnFields != null && ReturnFields.Size() > 0) {
+            sQuery += String.join(ReturnFields, ',');
+        } else {
+         	sQuery += 'Name';   
+        }
+
+        sQuery += ' FROM ' + ObjectName + ' WHERE ';
+        
+        if (QueryFields == null || QueryFields.isEmpty()) {
+            sQuery += ' Name LIKE :SearchText ';
+        } else {
+            for(string field : QueryFields) {
+            	sQuery += field + ' LIKE :SearchText ';    
+            }
+        }
+            
+        if(string.isNotBlank(SortColumn) && string.isNotBlank(SortOrder)) {
+            sQuery += ' ORDER BY ' + SortColumn + ' ' + SortOrder;
+        }
+        
+        sQuery += ' LIMIT ' + MaxResults;
+        
+        List <sObject> searchResult = Database.query(sQuery);
+
+        return searchResult;
+    }
+}
