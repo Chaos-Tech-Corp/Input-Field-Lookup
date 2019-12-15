@@ -1,5 +1,6 @@
 ({
     doInit : function(component,event,helper){
+        var selectedId = component.get("v.selectedId");
         var action = component.get("c.getObjectDetails");
         action.setParams({'ObjectName' : component.get("v.objectAPIName")});
         action.setCallback(this, function(response) {
@@ -7,6 +8,9 @@
             component.set("v.IconName", details.iconName);
             component.set("v.objectLabel", details.label);
             component.set("v.objectLabelPlural", details.pluralLabel);
+            if (selectedId == null || selectedId.trim().length <= 0) {
+            	component.set("v.isLoading", false);
+            }
         });
         $A.enqueueAction(action);
         
@@ -35,6 +39,20 @@
                 if (results != null && results.length > 0) {
 					component.lastRecordId = results[0].Id;
                 }
+            });
+            $A.enqueueAction(action);
+        }
+        if (selectedId != null && selectedId.trim().length > 0) {
+            var action = component.get("c.GetRecord"),
+                returnFields = component.get("v.returnFields");
+            action.setParams({'ObjectName' : component.get("v.objectAPIName"),
+                              'ReturnFields': returnFields,
+                              'Id': component.get("v.selectedId")});
+            action.setCallback(this, function(response) {
+                var results = response.getReturnValue();
+                results = helper.processResults(results, returnFields);
+                component.set("v.selectedName", results[0].Field0);
+                component.set("v.isLoading", false);
             });
             $A.enqueueAction(action);
         }
