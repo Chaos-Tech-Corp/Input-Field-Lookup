@@ -41,3 +41,5 @@ Define `modal_confirmation` component in a custom component markup:
 ### Notes & Considerations
 
 The variable `selectedName` uses the first value in the `returnFields` parameter. If none is defined it will return the `Name` field of the Object.
+
+When adding new record from the menu option `+ New _objectname_`, it won't navigate away, instead it selects the recently created record.
