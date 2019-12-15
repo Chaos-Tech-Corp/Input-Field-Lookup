@@ -9,11 +9,14 @@ Define `modal_confirmation` component in a custom component markup:
 ```xml
 <aura:component>
 
+    <aura:attribute name="selectedId" type="String" />
+    
     <c:customLookup 
                     objectAPIName="Account" 
                     label="Relate to"
                     returnFields="['Name','Country']" 
-                    queryFields="['Name','Description']"/>
+                    queryFields="['Name','Description']"
+                    selectedId="{!v.selectedId}"/>
 
 </aura:component>
 ```
@@ -31,3 +34,10 @@ Define `modal_confirmation` component in a custom component markup:
 - `sortOrder` _(String)_ - Field used to define the sort direction of the search results. Defaults to `DESC` _(optional)_.
 - `showRecent` _(Boolean)_ - Indicates whether to display the recent user records when focus. Defaults to `true` _(optional)_.
 - `showAddNew` _(Boolean)_ - Indicates whether to allow create a new record and relate to it. Defaults to `true` _(optional)_.
+- `selectedId` _(Boolean)_ - Gets or Sets the RecordId of the Object. _(optional)_.
+- `selectedName` _(Boolean)_ - Gets or Sets the `Name` of the Selected Record of the Object. _(optional)_.
+- `disabled` _(Boolean)_ - Specifies whether the component should be displayed in a disabled state. Defaults to `false` _(optional)_.
+
+### Notes & Considerations
+
+The variable `selectedName` uses the first value in the `returnFields` parameter. If none is defined it will return the `Name` field of the Object.
