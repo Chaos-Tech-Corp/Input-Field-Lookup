@@ -1,9 +1,12 @@
 ({
     doInit : function(component,event,helper){
-        var action = component.get("c.findObjectIcon");
-        action.setParams({'sObjectName' : component.get("v.sObjectAPIName")});
+        var action = component.get("c.getObjectDetails");
+        action.setParams({'ObjectName' : component.get("v.objectAPIName")});
         action.setCallback(this, function(response) {
-            component.set("v.IconName", response.getReturnValue());
+            var details = response.getReturnValue();
+            component.set("v.IconName", details.iconName);
+            component.set("v.objectLabel", details.label);
+            component.set("v.objectLabelPlural", details.pluralLabel);
         });
         $A.enqueueAction(action);
         
@@ -17,14 +20,57 @@
         if (queryFields == null || queryFields.length <= 0) {
             component.set("v.queryFields", ['Name']);
         }
+        
+        //help for cancelling the create new record
+        //find the latest accessed record for the user
+        if (component.get("v.showAddNew")) {
+            var action = component.get("c.GetRecentRecords");
+            action.setParams({
+                'ObjectName' : component.get("v.objectAPIName"),
+                'ReturnFields' :  null,
+                'MaxResults' : 1
+            });
+            action.setCallback(this, function(response) {
+                var results = response.getReturnValue();
+                if (results != null && results.length > 0) {
+					component.lastRecordId = results[0].Id;
+                }
+            });
+            $A.enqueueAction(action);
+        }
     },
     
     onFocus : function(component,event,helper){
-        var inputBox = component.find("lookup-input-box");
+        var inputBox = component.find("lookup-input-box"),
+            searchText = component.get("v.searchText") || '';
+        
         $A.util.addClass(inputBox, 'slds-is-open');
         $A.util.removeClass(inputBox, 'slds-is-close');
         
-        $A.util.addClass(component.find("lookup-input-box"),'slds-has-focus');
+        if (component.get("v.showRecent") && searchText.trim() == '') {
+            component.set("v.isSearching", true);        
+            var action = component.get("c.GetRecentRecords"),
+                returnFields = component.get("v.returnFields");
+            
+            action.setParams({
+                'ObjectName' : component.get("v.objectAPIName"),
+                'ReturnFields' :  returnFields,
+                'MaxResults' : component.get("v.maxResults")
+            });
+            action.setCallback(this, function(response) {
+                var results = response.getReturnValue();
+                if (results != null) {
+                    component.set("v.statusMessage", results.length > 0 ? null : 'No recent records.' );
+                    component.set("v.searchResult", 
+                                  helper.processResults(results, returnFields));
+                } else {
+                    component.set("v.statusMessage", results.length > 0 ? null : 'Search Error!' );
+                }
+                component.set("v.isSearching", false);
+            });
+            $A.enqueueAction(action);
+        }
+        
     },
     
     onBlur : function(component,event,helper){       
@@ -33,20 +79,12 @@
         $A.util.removeClass(inputBox, 'slds-is-open');
         
         $A.util.removeClass(component.find("lookup-input-box"),'slds-has-focus');
+        
     },
     
-    handleKeyUp : function(component, event, helper) {
+    onKeyUp : function(component, event, helper) {
         
         var searchText = component.get('v.searchText');
-		
-        if (searchText == null || searchText.trim().length < 3) {
-            /*component.set("v.listOfSearchRecords", null ); 
-            var forclose = component.find("lookup-container");
-            $A.util.addClass(forclose, 'slds-is-close');
-            $A.util.removeClass(forclose, 'slds-is-open');*/
-            return;
-        }
-
         //do not repeat the search if nothing changed
         if (component.lastSearchText !== searchText) {
             component.lastSearchText = searchText;
@@ -54,13 +92,18 @@
             return;
         }
         
+        if (searchText == null || searchText.trim().length < 3) {
+            component.set("v.searchResult", []);
+            component.set("v.statusMessage", null);
+            return;
+        }
         
         component.set("v.isSearching", true);        
         var action = component.get("c.SearchRecords"),
             returnFields = component.get("v.returnFields");
         
         action.setParams({
-            'ObjectName' : component.get("v.sObjectAPIName"),
+            'ObjectName' : component.get("v.objectAPIName"),
             'ReturnFields' :  returnFields,
             'QueryFields' :  component.get("v.queryFields"),
             'SearchText': searchText,
@@ -72,26 +115,61 @@
         action.setCallback(this, function(response) {
             var results = response.getReturnValue();
             if (results != null) {
-                debugger;
-                for (var i = 0; i < results.length; i++) {
-                    
-                    results[i]['Field0'] = results[i][returnFields[0]];    
-                    
-                    for(var j = 1; j < returnFields.length; j++){
-                        results[i]['Field1'] = (results[i]['Field1'] || '') + ' · ' + results[i][returnFields[j]];    
-                    }
-                    if (results[i]['Field1']) {
-                        results[i]['Field1'] = results[i]['Field1'].substring(3);
-                    }
-                }
-                component.set("v.searchResult", results);
+                component.set("v.statusMessage", results.length > 0 ? null : 'No records found.' );
+                component.set("v.searchResult", 
+                              helper.processResults(results, returnFields));
             } else {
-                
+                component.set("v.statusMessage", results.length > 0 ? null : 'Search Error!' );
             }
             component.set("v.isSearching", false);
         });
         $A.enqueueAction(action);
-
-    }    
+        
+    },
     
+    onSelectItem : function(component, event, helper) {
+        var selectedId = event.currentTarget.dataset.id;
+        component.set("v.selectedId", selectedId);
+        var results = component.get("v.searchResult");
+        for (var i = 0; i < results.length; i++) {
+            if (results[i].Id == selectedId) {
+                component.set("v.selectedName", results[i].Field0);
+                break;
+            }
+        }
+        $A.enqueueAction(component.get("c.onBlur"));
+    },
+    
+    removeSelectedOption : function(component, event, helper) {
+        component.set("v.selectedId", null);
+    },
+    
+    createNewRecord : function(component, event, helper) {
+        var createRecordEvent = $A.get("e.force:createRecord"),
+            objectName = component.get("v.objectAPIName"),
+            returnFields = component.get("v.returnFields");
+        createRecordEvent.setParams({
+            "entityApiName": objectName,
+            "navigationLocation" : "LOOKUP",
+            "panelOnDestroyCallback": function(event) {
+                let action = component.get("c.GetRecentRecords");
+                action.setParams({'ObjectName' : objectName,
+                                  'MaxResults' : 1,
+                                  'ReturnFields': returnFields});
+                action.setCallback(this, function(response) {
+                    var records = response.getReturnValue();
+                    if (records != null && records.length > 0) {
+                        if (records[0].Id != component.lastRecordId) {
+                            component.set("v.selectedId", records[0].Id);
+                            component.set("v.selectedName", records[0][returnFields[0]]);
+                            component.lastRecordId = records[0].Id;
+                        }
+                    }
+                });
+                $A.enqueueAction(action);              
+            }
+        });
+        createRecordEvent.fire();
+    }
+
 })
