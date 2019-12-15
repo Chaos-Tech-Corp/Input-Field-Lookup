@@ -12,10 +12,12 @@
     <aura:attribute name="sortOrder" type="String" default="DESC" />
     <aura:attribute name="showRecent" type="Boolean" default="true" />
     <aura:attribute name="showAddNew" type="Boolean" default="true" />
+    <aura:attribute name="disabled" type="Boolean" default="false" />
     
     <aura:attribute name="selectedId" type="String" />
     <aura:attribute name="selectedName" type="String" />
     
+    <aura:attribute name="isLoading" type="Boolean" default="true" access="private"/>
     <aura:attribute name="objectLabel" type="String" access="private"/>
     <aura:attribute name="objectLabelPlural" type="String" access="private"/>
     <aura:attribute name="searchResult" type="List" access="private"/>
@@ -39,13 +41,19 @@
             <div class="{!'slds-combobox_container' + (not(empty(v.selectedId)) ? ' slds-has-selection':'') }">
                 <div aura:id="lookup-input-box" class="slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click" aria-expanded="true" aria-haspopup="listbox" role="combobox">
                     
+                    <aura:if isTrue="{!v.isLoading}">
+                    	<lightning:spinner size="small"/>
+                    </aura:if>
+                    
                     <aura:if isTrue="{!not(empty(v.selectedId))}">
                         <div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_left-right" role="none">
                             <span class="slds-icon_container slds-icon-standard-account slds-combobox__input-entity-icon" title="Account">
                                 <lightning:icon class="slds-icon slds-icon_small slds-icon-text-default" iconName="{!v.IconName}" size="x-small" alternativeText="icon"/>
                             </span>
-                            <input type="text" class="slds-input slds-combobox__input slds-combobox__input-value" autoComplete="off" role="textbox" readonly="" value="{!v.selectedName}" />
-                            <lightning:buttonIcon class="slds-input__icon slds-input__icon_right" iconName="utility:close" size="small" alternativeText="Remove selected option" variant="bare" onclick="{!c.removeSelectedOption}"/>
+                            <input type="text" class="slds-input slds-combobox__input slds-combobox__input-value" autoComplete="off" role="textbox" readonly="" value="{!v.selectedName}" disabled="{!v.disabled}" />
+                            <aura:if isTrue="{!not(v.disabled)}">
+                            	<lightning:buttonIcon class="slds-input__icon slds-input__icon_right" iconName="utility:close" size="small" alternativeText="Remove selected option" variant="bare" onclick="{!c.removeSelectedOption}"/>
+                            </aura:if>
                         </div>
                         <aura:set attribute="else">
                             <div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right" role="none">
@@ -63,6 +71,7 @@
                                               placeholder="{!'Search ' + v.objectLabelPlural + '...'}"
                                               blur="{!c.onBlur}"
                                               focus="{!c.onFocus}"
+                                              disabled = "{!v.disabled}"
                                               />
                                 
                                 <span class="slds-icon_container slds-icon-utility-search slds-input__icon slds-input__icon_right">
