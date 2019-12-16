@@ -5,7 +5,10 @@
             results[i]['Field0'] = results[i][returnFields[0]];    
             
             for(var j = 1; j < returnFields.length; j++){
-                results[i]['Field1'] = (results[i]['Field1'] || '') + ' · ' + results[i][returnFields[j]];    
+                var fieldValue = results[i][returnFields[j]];
+                if (fieldValue) {
+                	results[i]['Field1'] = (results[i]['Field1'] || '') + ' · ' + fieldValue;
+                }
             }
             if (results[i]['Field1']) {
                 results[i]['Field1'] = results[i]['Field1'].substring(3);
