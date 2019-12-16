@@ -82,7 +82,7 @@
                     component.set("v.searchResult", 
                                   helper.processResults(results, returnFields));
                 } else {
-                    component.set("v.statusMessage", results.length > 0 ? null : 'Search Error!' );
+                    component.set("v.statusMessage", "Search Error!" );
                 }
                 component.set("v.isSearching", false);
             });
