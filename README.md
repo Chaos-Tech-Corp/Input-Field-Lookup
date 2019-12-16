@@ -2,6 +2,8 @@
 
 This component creates a lookup field similar to the generic Salesforce Lookup fields to be used in Lightning components or applications.
 
+It automatically loads the object icon and allows to create a new record similar the native component (it won't navigate away and will select it after creation).
+
 Default state:
 ![default](static/lookup_default.png?raw=true)
 
@@ -57,3 +59,5 @@ Define `lookupField` component in a custom component markup:
 The variable `selectedName` uses the first value in the `returnFields` parameter. If none is defined it will return the `Name` field of the Object.
 
 When adding new record from the menu option `+ New _objectname_`, it won't navigate away, instead it selects the recently created record.
+
+If you see the `Search Error!` message in the Search Results, check the fields you are using in the `returnFields` and `queryFields` parameters as they might not exists or they might not be available for query or filter (You cannot filter by the `Description` field in the `Account` object so you shouldn't use it as in the `queryFields` but you can use it in the `returnFields`).
