@@ -4,14 +4,14 @@ This component creates a lookup field similar to the generic Salesforce Lookup f
 
 ## Usage
 
-Define `modal_confirmation` component in a custom component markup:
+Define `lookupField` component in a custom component markup:
 
 ```xml
 <aura:component>
 
     <aura:attribute name="selectedId" type="String" />
     
-    <c:customLookup 
+    <c:lookupField 
                     objectAPIName="Account" 
                     label="Relate to"
                     returnFields="['Name','Country']" 
