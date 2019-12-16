@@ -2,6 +2,20 @@
 
 This component creates a lookup field similar to the generic Salesforce Lookup fields to be used in Lightning components or applications.
 
+Default state:
+![default](static/lookup_default.png?raw=true)
+
+Focused, showing recent items:
+![focused](static/lookup_focused.png?raw=true)
+
+Record Selected:
+![selected](static/lookup_selected.png?raw=true)
+
+Record Selected and Disabled:
+![disabled](static/lookup_selected_disabled.png?raw=true)
+
+
+
 ## Usage
 
 Define `lookupField` component in a custom component markup:
@@ -14,8 +28,8 @@ Define `lookupField` component in a custom component markup:
     <c:lookupField 
                     objectAPIName="Account" 
                     label="Relate to"
-                    returnFields="['Name','Country']" 
-                    queryFields="['Name','Description']"
+                    returnFields="['Name','Phone','Website']" 
+                    queryFields="['Name','Phone','Website']"
                     selectedId="{!v.selectedId}"/>
 
 </aura:component>
