@@ -66,11 +66,11 @@ If you see the `Search Error!` message in the Search Results, check the fields y
 
 Open the Developer Console and proceed as follows:
 
-1. Create a new Apex Class (File > New > Apex Class) and name it: ´lookupfieldController´.
-2. Create a new Lightning Component (File > New > Lightning Component) and name it ´lookupField´.
+1. Create a new Apex Class (File > New > Apex Class) and name it: `lookupfieldController`.
+2. Create a new Lightning Component (File > New > Lightning Component) and name it `lookupField`.
 3. Copy and pase the code from the SRC directory into the recently created files.
    - For the lightning component:
-     - COMPONENT: lookupField.cmp
-     - CONTROLLER: lookupField.js
-     - HELPER: lookupField.helper
-     - STYLE: lookupField.css
+     - `COMPONENT`: lookupField.cmp
+     - `CONTROLLER`: lookupField.js
+     - `HELPER`: lookupField.helper
+     - `STYLE`: lookupField.css
