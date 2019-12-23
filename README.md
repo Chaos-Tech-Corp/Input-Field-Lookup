@@ -61,3 +61,16 @@ The variable `selectedName` uses the first value in the `returnFields` parameter
 When adding new record from the menu option `+ New _objectname_`, it won't navigate away, instead it selects the recently created record.
 
 If you see the `Search Error!` message in the Search Results, check the fields you are using in the `returnFields` and `queryFields` parameters as they might not exists or they might not be available for query or filter (You cannot filter by the `Description` field in the `Account` object so you shouldn't use it as in the `queryFields` but you can use it in the `returnFields`).
+
+### How to Deploy it in your Salesforce Org (Sandbox)
+
+Open the Developer Console and proceed as follows:
+
+1. Create a new Apex Class (File > New > Apex Class) and name it: ´lookupfieldController´.
+2. Create a new Lightning Component (File > New > Lightning Component) and name it ´lookupField´.
+3. Copy and pase the code from the SRC directory into the recently created files.
+   - For the lightning component:
+     - COMPONENT: lookupField.cmp
+     - CONTROLLER: lookupField.js
+     - HELPER: lookupField.helper
+     - STYLE: lookupField.css
