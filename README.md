@@ -70,7 +70,8 @@ Open the Developer Console and proceed as follows:
 2. Create a new Lightning Component (File > New > Lightning Component) and name it `lookupField`.
 3. Copy and pase the code from the SRC directory into the recently created files.
    - For the lightning component:
-     - `COMPONENT`: lookupField.cmp
-     - `CONTROLLER`: lookupField.js
-     - `HELPER`: lookupField.helper
-     - `STYLE`: lookupField.css
+     - `COMPONENT`: _lookupField.cmp_
+     - `CONTROLLER`: _lookupField.js_
+     - `HELPER`: _lookupField.helper_
+     - `STYLE`: _lookupField.css_
+   - For the `Apex Class`: _lookupfieldController.apxc_
