@@ -7,6 +7,6 @@
     "component":"/src/lookupField.cmp",
     "controller":"/src/lookupField.js",
     "helper":"/src/lookupField.helper",
-    "style":"/src/lookupField.css",
+    "style":"/src/lookupField.css"
   }
 }
