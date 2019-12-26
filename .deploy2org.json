@@ -1,0 +1,12 @@
+  
+{
+  "component_name": "inputLookup",
+  "api_version": "v47.0",
+  "apex_class": "/src/lookupfieldController.apxc",
+  "bundle_details": {
+    "component":"/src/lookupField.cmp",
+    "controller":"/src/lookupField.js",
+    "helper":"/src/lookupField.helper",
+    "style":"/src/lookupField.css",
+  }
+}
