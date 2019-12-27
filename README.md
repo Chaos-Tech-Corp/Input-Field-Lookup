@@ -1,3 +1,5 @@
+[![Deploy](https://deploy2.org/dist/deploy2org.svg)](https://deploy2.org/deploy)
+
 # Input Field Lookup
 
 This component creates a lookup field similar to the generic Salesforce Lookup fields to be used in Lightning components or applications.
