@@ -77,3 +77,7 @@ Open the Developer Console and proceed as follows:
      - `HELPER`: _lookupField.helper_
      - `STYLE`: _lookupField.css_
    - For the `Apex Class`: _lookupfieldController.apxc_
+
+Alternatively you can use `deploy2.org` to deploy directly from Github to your Sandbox.
+
+[![Deploy](https://deploy2.org/dist/deploy2org.svg)](https://deploy2.org/deploy).
