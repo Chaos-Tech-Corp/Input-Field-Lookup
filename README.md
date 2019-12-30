@@ -80,4 +80,4 @@ Open the Developer Console and proceed as follows:
 
 Alternatively you can use `deploy2.org` to deploy directly from Github to your Sandbox.
 
-[![Deploy](https://deploy2.org/dist/deploy2org.svg)](https://deploy2.org/deploy).
+[![Deploy](https://deploy2.org/dist/deploy2org.svg)](https://deploy2.org/deploy)
