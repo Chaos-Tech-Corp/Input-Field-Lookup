@@ -73,7 +73,7 @@ Open the Developer Console and proceed as follows:
 3. Create a new Lightning Component (File > New > Lightning Component) and name it `lookupField`.
 4. Copy and pase the code from the SRC directory into the recently created files.
    - For the `Apex Class`: _lookupfieldController.apxc_
-   - For the `Event`: selectedsObjectRecordEvent.evt_
+   - For the `Event`: _selectedsObjectRecordEvent.evt_
    - For the lightning component:
      - `COMPONENT`: _lookupField.cmp_
      - `CONTROLLER`: _lookupField.js_
