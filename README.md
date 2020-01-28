@@ -69,14 +69,17 @@ If you see the `Search Error!` message in the Search Results, check the fields y
 Open the Developer Console and proceed as follows:
 
 1. Create a new Apex Class (File > New > Apex Class) and name it: `lookupfieldController`.
-2. Create a new Lightning Component (File > New > Lightning Component) and name it `lookupField`.
-3. Copy and pase the code from the SRC directory into the recently created files.
+2. Create a new Lightning Event (File > New > Lightning Event) and name it `selectedsObjectRecordEvent`.
+3. Create a new Lightning Component (File > New > Lightning Component) and name it `lookupField`.
+4. Copy and pase the code from the SRC directory into the recently created files.
+   - For the `Apex Class`: _lookupfieldController.apxc_
+   - For the `Event`: selectedsObjectRecordEvent.evt_
    - For the lightning component:
      - `COMPONENT`: _lookupField.cmp_
      - `CONTROLLER`: _lookupField.js_
      - `HELPER`: _lookupField.helper_
      - `STYLE`: _lookupField.css_
-   - For the `Apex Class`: _lookupfieldController.apxc_
+
 
 Alternatively you can use `deploy2.org` to deploy directly from Github to your Sandbox.
 
