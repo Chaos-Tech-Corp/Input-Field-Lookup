@@ -1,7 +1,7 @@
 {
 	"component_name": "inputLookup",
 	"api_version": "v47.0",
-	"apex_class": ["/src/lookupfieldController.apxc"],
+	"apex_class": ["/src/lookupfieldController.apxc","/src/lookupfieldController_Test.apxc"],
 	"events": ["/src/selectedsObjectRecordEvent.evt"],
 	"bundle_details": {
 		"component": "/src/lookupField.cmp",
