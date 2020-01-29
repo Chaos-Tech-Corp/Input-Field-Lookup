@@ -35,7 +35,7 @@ Define `lookupField` component in a custom component markup:
                     returnFields="['Name','Phone','Website']" 
                     queryFields="['Name','Phone','Website']"
                     selectedId="{!v.selectedId}"
-                    filter="CreatedDate > 2001-01-01"/>
+                    filter="CreatedDate > 2001-01-01T00:00:01"/>
 
 </aura:component>
 ```
