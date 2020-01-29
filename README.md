@@ -34,7 +34,8 @@ Define `lookupField` component in a custom component markup:
                     label="Relate to"
                     returnFields="['Name','Phone','Website']" 
                     queryFields="['Name','Phone','Website']"
-                    selectedId="{!v.selectedId}"/>
+                    selectedId="{!v.selectedId}"
+                    filter="CreatedDate > 2001-01-01"/>
 
 </aura:component>
 ```
@@ -55,6 +56,7 @@ Define `lookupField` component in a custom component markup:
 - `selectedId` _(Boolean)_ - Gets or Sets the RecordId of the Object. _(optional)_.
 - `selectedName` _(Boolean)_ - Gets or Sets the `Name` of the Selected Record of the Object. _(optional)_.
 - `disabled` _(Boolean)_ - Specifies whether the component should be displayed in a disabled state. Defaults to `false` _(optional)_.
+- `filter` _(String)_ - Allows the user to define a filter for the search query. Defaults to `null` _(optional)_.
 
 ### Notes & Considerations
 
@@ -62,7 +64,9 @@ The variable `selectedName` uses the first value in the `returnFields` parameter
 
 When adding new record from the menu option `+ New _objectname_`, it won't navigate away, instead it selects the recently created record.
 
-If you see the `Search Error!` message in the Search Results, check the fields you are using in the `returnFields` and `queryFields` parameters as they might not exists or they might not be available for query or filter (You cannot filter by the `Description` field in the `Account` object so you shouldn't use it as in the `queryFields` but you can use it in the `returnFields`).
+If you see the `Search Error!` message in the Search Results, check the fields you are using in the `returnFields`, `queryFields` and `filter` parameters as they might not exists or they might not be available for query or filter (You cannot filter by the `Description` field in the `Account` object so you shouldn't use it as in the `queryFields` but you can use it in the `returnFields`).
+
+When using the `filter` please note that it is placed directly in the 'WHERE' condition of the `SOQL` statement without any validations, so please double check it.
 
 ### How to Deploy it in your Salesforce Org (Sandbox)
 
