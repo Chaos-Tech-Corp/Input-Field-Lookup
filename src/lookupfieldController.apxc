@@ -23,7 +23,7 @@ public with Sharing class lookupfieldController {
     }
     
     @AuraEnabled
-    public static List<sObject> SearchRecords(String ObjectName, List<String> ReturnFields, List<String> QueryFields, String SearchText, String SortColumn, String SortOrder, Integer MaxResults) {
+    public static List<sObject> SearchRecords(String ObjectName, List<String> ReturnFields, List<String> QueryFields, String SearchText, String SortColumn, String SortOrder, Integer MaxResults, String Filter) {
         
         //always put a limit on the results
         if (MaxResults == null || MaxResults == 0) {
@@ -51,7 +51,11 @@ public with Sharing class lookupfieldController {
             for(string field : QueryFields) {
                 likeField += ' OR ' + field + ' LIKE :SearchText ';    
             }
-            sQuery += likeField.removeStart(' OR ');
+            sQuery += ' (' + likeField.removeStart(' OR ') + ') ';
+        }
+        
+        if (Filter != null) {
+            sQuery += ' AND (' + Filter + ')';
         }
         
         if(string.isNotBlank(SortColumn) && string.isNotBlank(SortOrder)) {
