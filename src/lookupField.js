@@ -151,7 +151,7 @@
         var results = component.get("v.searchResult");
         for (var i = 0; i < results.length; i++) {
             if (results[i].Id == selectedId) {
-                component.set("v.selectedName", results[i].Field0);
+                component.set("v.selectedName", results[i].Field0.replace("<mark>","").replace("</mark>",""));
                 break;
             }
         }
