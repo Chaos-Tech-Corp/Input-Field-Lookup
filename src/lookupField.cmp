@@ -13,6 +13,7 @@
     <aura:attribute name="showRecent" type="Boolean" default="true" />
     <aura:attribute name="showAddNew" type="Boolean" default="true" />
     <aura:attribute name="disabled" type="Boolean" default="false" />
+    <aura:attribute name="filter" type="String" default="" />
     
     <aura:attribute name="selectedId" type="String" />
     <aura:attribute name="selectedName" type="String" />
