@@ -127,7 +127,8 @@
             'SearchText': searchText,
             'SortColumn' : component.get("v.sortColumn"),
             'SortOrder' : component.get("v.sortOrder"),
-            'MaxResults' : component.get("v.maxResults")
+            'MaxResults' : component.get("v.maxResults"),
+            'Filter' : component.get("v.filter")
         });
         
         action.setCallback(this, function(response) {
