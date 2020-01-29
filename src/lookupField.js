@@ -135,7 +135,7 @@
             if (results != null) {
                 component.set("v.statusMessage", results.length > 0 ? null : 'No records found.' );
                 component.set("v.searchResult", 
-                              helper.processResults(results, returnFields));
+                              helper.processResults(results, returnFields, searchText));
             } else {
                 component.set("v.statusMessage", 'Search Error!' );
             }
