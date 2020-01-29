@@ -106,9 +106,9 @@
                                             </span>
                                         </span>
                                         <span class="slds-media__body">
-                                            <span class="slds-listbox__option-text slds-listbox__option-text_entity">{!record.Field0}</span>
+                                            <span class="slds-listbox__option-text slds-listbox__option-text_entity"><aura:unescapedHtml value="{!record.Field0}"/></span>
                                             <aura:if isTrue="{!record.Field1 != null}">
-                                                <span class="slds-listbox__option-meta slds-listbox__option-meta_entity">{!record.Field1}</span>
+                                                <span class="slds-listbox__option-meta slds-listbox__option-meta_entity"><aura:unescapedHtml value="{!record.Field1}"/></span>
                                             </aura:if>
                                         </span>
                                     </div>
