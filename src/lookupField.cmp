@@ -14,6 +14,9 @@
     <aura:attribute name="showAddNew" type="Boolean" default="true" />
     <aura:attribute name="disabled" type="Boolean" default="false" />
     <aura:attribute name="filter" type="String" default="" />
+    <aura:attribute name="required" type="Boolean" default="false" />
+    <aura:attribute name="showError" type="Boolean" default="false" />
+    <aura:attribute name="errorMessage" type="String" default="" />
     
     <aura:attribute name="selectedId" type="String" />
     <aura:attribute name="selectedName" type="String" />
@@ -33,9 +36,13 @@
     <aura:handler name="oSelectedRecordEvent" event="c:selectedsObjectRecordEvent" action="{!c.handleComponentEvent}"/>
     
     
-    <div class="slds-form-element">
+    <div class="{! 'slds-form-element' + (v.showError ? ' slds-has-error' : '') }">
         <aura:if isTrue="{!v.variant != 'label-hidden'}">
-            <label class="slds-form-element__label" for="lookup-field">{!v.label}</label>
+            <label class="slds-form-element__label" for="lookup-field">
+                <aura:if isTrue="{! v.required }">
+                    <abbr class="slds-required" title="required">* </abbr>
+                </aura:if>
+                {!v.label}</label>
         </aura:if>
         
         <div class="slds-form-element__control">
@@ -137,6 +144,9 @@
                 </div>
             </div>
         </div>
+        <aura:if isTrue="{! v.showError}" >
+        	<div class="slds-form-element__help" id="error-message-unique-id">{! v.errorMessage }</div>
+        </aura:if>
     </div>
     
 </aura:component>
