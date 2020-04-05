@@ -57,6 +57,9 @@ Define `lookupField` component in a custom component markup:
 - `selectedName` _(Boolean)_ - Gets or Sets the `Name` of the Selected Record of the Object. _(optional)_.
 - `disabled` _(Boolean)_ - Specifies whether the component should be displayed in a disabled state. Defaults to `false` _(optional)_.
 - `filter` _(String)_ - Allows the user to define a filter for the search query. Defaults to `null` _(optional)_.
+- `required` _(Boolean)_ - Specifies that an input field must be filled out before submitting the form. Defaults to `false` _(optional)_.
+- `showError` _(Boolean)_ - Gets or Sets the display type of the component, normal or error. Defaults to `false` _(optional)_.
+- `errorMessage` _(String)_ - Gets or Sets error message. Defaults to `null` _(optional)_.
 
 ### Notes & Considerations
 
